@@ -31,14 +31,13 @@ stream.start_stream()
 # A function for the input to be processed to find the max frequency of a buffer
 def start_stream():
   while stream.is_active:
-    buffer[:-Chunk] = buffer[Chunk:] 
-    buffer[-Chunk:] = np.frombuffer(stream.read(Chunk), np.int32) # Appending new buffers and removing old buffers
+    buffer[-Chunk:] = np.frombuffer(stream.read(Chunk), np.int32) # Appending new buffers by clearing out the old one
 
     FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
-    Freq = (np.abs(FFT).argmax()) # Finding the maximum frequency
+    Freq = np.abs(FFT).argmax() # Finding the maximum frequency
       
-    print("The guitar pitch is {:2f} Hz".format(Freq))
+    print("The guitar pitch is {:.2f} Hz".format(Freq))
 
 # Threading Process to run the GUI and the audio processing simultaneously
 Thread = threading.Thread(target=start_stream, daemon = True)
@@ -95,9 +94,6 @@ class TunerGUI:
 
 # Function to check if the user is tuned to E2
 def tune_to_E2():
-  buffer[:-Chunk] = buffer[Chunk:] 
-  buffer[-Chunk:] = np.frombuffer(stream.read(Chunk), np.int32) # Appending new buffers and removing old buffers
-
   FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
   Freq = (np.abs(FFT).argmax()) # Finding the maximum frequency
@@ -113,9 +109,6 @@ def tune_to_E2():
 
 # Function to check if the user is tuned to A2
 def tune_to_A2():
-  buffer[:-Chunk] = buffer[Chunk:] 
-  buffer[-Chunk:] = np.frombuffer(stream.read(Chunk), np.int32) # Appending new buffers and removing old buffers
-
   FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
   Freq = (np.abs(FFT).argmax()) # Finding the maximum frequency
@@ -131,9 +124,6 @@ def tune_to_A2():
 
 # Function to check if the user is tuned to D3
 def tune_to_D3():
-  buffer[:-Chunk] = buffer[Chunk:] 
-  buffer[-Chunk:] = np.frombuffer(stream.read(Chunk), np.int32) # Appending new buffers and removing old buffers
-
   FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
   Freq = (np.abs(FFT).argmax()) # Finding the maximum frequency
@@ -148,10 +138,7 @@ def tune_to_D3():
     print("Tune {:2f} Hz Lower".format(difference))
 
 # Function to check if the user is tuned to G3
-def tune_to_G3():
-  buffer[:-Chunk] = buffer[Chunk:] 
-  buffer[-Chunk:] = np.frombuffer(stream.read(Chunk), np.int32) # Appending new buffers and removing old buffers
-
+def tune_to_G3(): 
   FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
   Freq = (np.abs(FFT).argmax()) # Finding the maximum frequency
@@ -167,9 +154,6 @@ def tune_to_G3():
 
 # Function to check if the user is tuned to B3
 def tune_to_B3():
-  buffer[:-Chunk] = buffer[Chunk:] 
-  buffer[-Chunk:] = np.frombuffer(stream.read(Chunk), np.int32) # Appending new buffers and removing old buffers
-
   FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
   Freq = (np.abs(FFT).argmax()) # Finding the maximum frequency
@@ -185,9 +169,6 @@ def tune_to_B3():
 
 # Function to check if the user is tuned to E4
 def tune_to_E4():
-  buffer[:-Chunk] = buffer[Chunk:] 
-  buffer[-Chunk:] = np.frombuffer(stream.read(Chunk), np.int32) # Appending new buffers and removing old buffers
-
   FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
   Freq = (np.abs(FFT).argmax()) # Finding the maximum frequency
