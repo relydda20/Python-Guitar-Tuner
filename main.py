@@ -12,7 +12,7 @@ G3_freq = 196.00
 B3_freq = 246.23
 E4_freq = 329.23
 
-maxFreq = 330
+FreqLimit = 330
 
 Sample_Rate = 44100     # Sampling frequency in Hz
 Chunk = 21050            # The number of frames in the buffer
@@ -37,7 +37,7 @@ def start_stream():
 
     FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
-    Freq = np.abs(FFT[:maxFreq]).argmax() # Finding the maximum frequency
+    Freq = np.abs(FFT[:FreqLimit]).argmax() # Finding the maximum frequency
       
     print("The guitar frequency is {:.2f} Hz".format(Freq))
 
@@ -98,7 +98,7 @@ class TunerGUI:
 def tune_to_E2():
   FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
-  Freq = (np.abs(FFT[:maxFreq]).argmax()) # Finding the maximum frequency
+  Freq = (np.abs(FFT[:FreqLimit]).argmax()) # Finding the maximum frequency
 
   if ( Freq < E2_freq):
     os.system('cls' if os.name=='nt' else 'clear')
@@ -113,7 +113,7 @@ def tune_to_E2():
 def tune_to_A2():
   FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
-  Freq = (np.abs(FFT[:maxFreq]).argmax()) # Finding the maximum frequency
+  Freq = (np.abs(FFT[:FreqLimit]).argmax()) # Finding the maximum frequency
 
   if ( Freq < A2_freq):
     os.system('cls' if os.name=='nt' else 'clear')
@@ -128,7 +128,7 @@ def tune_to_A2():
 def tune_to_D3():
   FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
-  Freq = (np.abs(FFT[:maxFreq]).argmax()) # Finding the maximum frequency
+  Freq = (np.abs(FFT[:FreqLimit]).argmax()) # Finding the maximum frequency
 
   if ( Freq < D3_freq):
     os.system('cls' if os.name=='nt' else 'clear')
@@ -143,7 +143,7 @@ def tune_to_D3():
 def tune_to_G3(): 
   FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
-  Freq = (np.abs(FFT[:maxFreq]).argmax()) # Finding the maximum frequency
+  Freq = (np.abs(FFT[:FreqLimit]).argmax()) # Finding the maximum frequency
      
   if ( Freq < G3_freq):
     os.system('cls' if os.name=='nt' else 'clear')
@@ -158,7 +158,7 @@ def tune_to_G3():
 def tune_to_B3():
   FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
-  Freq = (np.abs(FFT[:maxFreq]).argmax()) # Finding the maximum frequency
+  Freq = (np.abs(FFT[:FreqLimit]).argmax()) # Finding the maximum frequency
      
   if ( Freq < B3_freq):
     os.system('cls' if os.name=='nt' else 'clear')
@@ -173,7 +173,7 @@ def tune_to_B3():
 def tune_to_E4():
   FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
-  Freq = (np.abs(FFT[:maxFreq]).argmax()) # Finding the maximum frequency
+  Freq = (np.abs(FFT[:FreqLimit]).argmax()) # Finding the maximum frequency
     
   if ( Freq < E4_freq):
     os.system('cls' if os.name=='nt' else 'clear')
