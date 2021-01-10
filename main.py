@@ -5,22 +5,24 @@ import os
 import threading
 
 #Frequency of each note in Hz
-E2_freq = 247.00
+E2_freq = 164.81  
 A2_freq = 220.00
-D3_freq = 290.00
-G3_freq = 194.00
-B3_freq = 733.00
-E4_freq = 329.00
+D3_freq = 146.83
+G3_freq = 196.00
+B3_freq = 246.23
+E4_freq = 329.23
+
+maxFreq = 330
 
 Sample_Rate = 44100     # Sampling frequency in Hz
 Chunk = 21050            # The number of frames in the buffer
 Samples_Per_Buffer = 44100 #Used determine how much data that can be processed 
 
 # Creating a zero array to be used as a buffer when receiving input
-buffer = np.zeros(Samples_Per_Buffer, dtype=np.int32)
+buffer = np.zeros(Samples_Per_Buffer, dtype=np.float32)
 
 # Defining the audio stream and starting it
-stream = pyaudio.PyAudio().open(format=pyaudio.paInt32,
+stream = pyaudio.PyAudio().open(format=pyaudio.paFloat32,
                                 channels=1,
                                 rate=Sample_Rate,
                                 input=True,
@@ -35,7 +37,7 @@ def start_stream():
 
     FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
-    Freq = np.abs(FFT).argmax() # Finding the maximum frequency
+    Freq = np.abs(FFT[:maxFreq]).argmax() # Finding the maximum frequency
       
     print("The guitar frequency is {:.2f} Hz".format(Freq))
 
@@ -71,22 +73,22 @@ class TunerGUI:
     self.__E4_button = Button(master, text = "E4", command=tune_to_E4)
     self.__E4_button.pack()
 
-    self.__E2_label = Label(master, text = "E2 = 247.00 Hz")
+    self.__E2_label = Label(master, text = "E2 = 164.81 Hz")
     self.__E2_label.pack()
 
     self.__E2_label = Label(master, text = "A2 = 220.00 Hz")
     self.__E2_label.pack()                         
 
-    self.__E2_label = Label(master, text = "D3 = 290.00 Hz")
+    self.__E2_label = Label(master, text = "D3 = 146.83 Hz")
     self.__E2_label.pack()       
 
-    self.__E2_label = Label(master, text = "G3 = 194.00 Hz")
+    self.__E2_label = Label(master, text = "G3 = 196.00 Hz")
     self.__E2_label.pack()       
 
-    self.__E2_label = Label(master, text = "B3 = 733.00 Hz")
+    self.__E2_label = Label(master, text = "B3 = 246.23 Hz")
     self.__E2_label.pack()       
 
-    self.__E2_label = Label(master, text = "E4 = 329.00 Hz")
+    self.__E2_label = Label(master, text = "E4 = 329.23 Hz")
     self.__E2_label.pack()       
 
     self.close_button = Button(master, text="Close", command=master.quit)
@@ -96,7 +98,7 @@ class TunerGUI:
 def tune_to_E2():
   FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
-  Freq = (np.abs(FFT).argmax()) # Finding the maximum frequency
+  Freq = (np.abs(FFT[:maxFreq]).argmax()) # Finding the maximum frequency
 
   if ( Freq < E2_freq):
     os.system('cls' if os.name=='nt' else 'clear')
@@ -111,7 +113,7 @@ def tune_to_E2():
 def tune_to_A2():
   FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
-  Freq = (np.abs(FFT).argmax()) # Finding the maximum frequency
+  Freq = (np.abs(FFT[:maxFreq]).argmax()) # Finding the maximum frequency
 
   if ( Freq < A2_freq):
     os.system('cls' if os.name=='nt' else 'clear')
@@ -126,7 +128,7 @@ def tune_to_A2():
 def tune_to_D3():
   FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
-  Freq = (np.abs(FFT).argmax()) # Finding the maximum frequency
+  Freq = (np.abs(FFT[:maxFreq]).argmax()) # Finding the maximum frequency
 
   if ( Freq < D3_freq):
     os.system('cls' if os.name=='nt' else 'clear')
@@ -141,7 +143,7 @@ def tune_to_D3():
 def tune_to_G3(): 
   FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
-  Freq = (np.abs(FFT).argmax()) # Finding the maximum frequency
+  Freq = (np.abs(FFT[:maxFreq]).argmax()) # Finding the maximum frequency
      
   if ( Freq < G3_freq):
     os.system('cls' if os.name=='nt' else 'clear')
@@ -156,7 +158,7 @@ def tune_to_G3():
 def tune_to_B3():
   FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
-  Freq = (np.abs(FFT).argmax()) # Finding the maximum frequency
+  Freq = (np.abs(FFT[:maxFreq]).argmax()) # Finding the maximum frequency
      
   if ( Freq < B3_freq):
     os.system('cls' if os.name=='nt' else 'clear')
@@ -171,7 +173,7 @@ def tune_to_B3():
 def tune_to_E4():
   FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
-  Freq = (np.abs(FFT).argmax()) # Finding the maximum frequency
+  Freq = (np.abs(FFT[:maxFreq]).argmax()) # Finding the maximum frequency
     
   if ( Freq < E4_freq):
     os.system('cls' if os.name=='nt' else 'clear')
