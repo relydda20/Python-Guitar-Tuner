@@ -37,7 +37,7 @@ def start_stream():
 
     Freq = np.abs(FFT).argmax() # Finding the maximum frequency
       
-    print("The guitar pitch is {:.2f} Hz".format(Freq))
+    print("The guitar frequency is {:.2f} Hz".format(Freq))
 
 # Threading Process to run the GUI and the audio processing simultaneously
 Thread = threading.Thread(target=start_stream, daemon = True)
