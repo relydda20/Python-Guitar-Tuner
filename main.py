@@ -14,9 +14,9 @@ E4_freq = 329.23
 
 FreqLimit = 330
 
-Sample_Rate = 44100     # Sampling frequency in Hz
+Sample_Rate = 44100     # Sampling frequency in Hz as one of the requirements in starting a Pyaudio stream. Used the Sampling frequency of a CD 
 Chunk = 21050            # The number of frames in the buffer
-Samples_Per_Buffer = 44100 #Used determine how much data that can be processed 
+Samples_Per_Buffer = 44100 # wUsed determine how much data that can be processed 
 
 # Creating a zero array to be used as a buffer when receiving input
 buffer = np.zeros(Samples_Per_Buffer, dtype=np.float32)
@@ -33,11 +33,11 @@ stream.start_stream()
 # A function for the input to be processed to find the max frequency of a buffer
 def start_stream():
   while stream.is_active:
-    buffer[-Chunk:] = np.frombuffer(stream.read(Chunk), np.int32) # Appending new buffers by clearing out the old one
+    buffer[-Chunk:] = np.frombuffer(stream.read(Chunk), np.float32) # Appending new buffers by clearing out the old one
 
     FFT = np.fft.fft(buffer) # Using the FFT algorithm to process the DFT
 
-    Freq = np.abs(FFT[:FreqLimit]).argmax() # Finding the maximum frequency
+    Freq = np.argmax(FFT[:FreqLimit]) # Finding the maximum frequency
       
     print("The guitar frequency is {:.2f} Hz".format(Freq))
 
@@ -50,7 +50,7 @@ class TunerGUI:
   def __init__(self, master,):
     self.__master = master
     self.__master.title("Python Guitar Tuner")
-    self.__master.geometry = ("600 x 600")    
+    self.__master.geometry = ('600x600')    
 
     self.__label = Label(master, text="Click the Note you want to tune your guitar to!")
     self.__label.pack()
